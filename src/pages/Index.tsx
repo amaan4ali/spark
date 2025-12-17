@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { SessionFlow } from "@/components/SessionFlow";
 import { Button } from "@/components/ui/button";
 import { Users, Sparkles } from "lucide-react";
 
+const ROTATING_WORDS = ["date", "friend", "coworker", "crush", "roommate", "partner"];
+
 type View = "hero" | "session";
 
 function Index() {
   const [currentView, setCurrentView] = useState<View>("hero");
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+        setIsAnimating(false);
+      }, 200);
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (currentView === "session") {
     return <SessionFlow onBack={() => setCurrentView("hero")} />;
@@ -28,7 +44,15 @@ function Index() {
             A spark turns into a plan, a night, a memory.
           </p>
           <p className="text-muted-foreground">
-            Share your interests, invite your date, and discover what you'll both love
+            Share your interests, invite your{" "}
+            <span 
+              className={`inline-block text-lg font-semibold text-primary transition-all duration-200 ${
+                isAnimating ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
+              }`}
+            >
+              {ROTATING_WORDS[currentWordIndex]}
+            </span>
+            , and discover what you'll both love
           </p>
         </div>
 
