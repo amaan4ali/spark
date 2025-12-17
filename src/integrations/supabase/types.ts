@@ -14,7 +14,122 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      interests: {
+        Row: {
+          category: Database["public"]["Enums"]["interest_category"]
+          icon: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["interest_category"]
+          icon?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["interest_category"]
+          icon?: string | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      saved_activities: {
+        Row: {
+          created_at: string | null
+          id: string
+          session_id: string | null
+          venue_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          session_id?: string | null
+          venue_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          session_id?: string | null
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_activities_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_interests: {
+        Row: {
+          created_at: string | null
+          id: string
+          interest_id: string | null
+          is_creator: boolean
+          session_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          interest_id?: string | null
+          is_creator: boolean
+          session_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          interest_id?: string | null
+          is_creator?: boolean
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_interests_interest_id_fkey"
+            columns: ["interest_id"]
+            isOneToOne: false
+            referencedRelation: "interests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "session_interests_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sessions: {
+        Row: {
+          code: string
+          created_at: string | null
+          creator_name: string | null
+          id: string
+          partner_name: string | null
+          status: string | null
+        }
+        Insert: {
+          code?: string
+          created_at?: string | null
+          creator_name?: string | null
+          id?: string
+          partner_name?: string | null
+          status?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          creator_name?: string | null
+          id?: string
+          partner_name?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +138,13 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      interest_category:
+        | "food"
+        | "drinks"
+        | "outdoors"
+        | "culture"
+        | "entertainment"
+        | "nightlife"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +271,15 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      interest_category: [
+        "food",
+        "drinks",
+        "outdoors",
+        "culture",
+        "entertainment",
+        "nightlife",
+      ],
+    },
   },
 } as const
