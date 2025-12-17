@@ -22,13 +22,13 @@ function Index() {
             <Sparkles className="w-10 h-10 text-primary-foreground" />
           </div>
           <h1 className="text-4xl font-bold text-foreground mb-3">
-            FeedMe
+            Spark
           </h1>
           <p className="text-xl text-muted-foreground mb-2">
-            Find things you'll both love
+            A spark turns into a plan, a night, a memory.
           </p>
           <p className="text-muted-foreground">
-            Share your interests, invite your date, and swipe through activities you'll both enjoy
+            Share your interests, invite your date, and discover what you'll both love
           </p>
         </div>
 
