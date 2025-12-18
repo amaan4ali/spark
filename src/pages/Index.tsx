@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { HeroSection } from "@/components/HeroSection";
 import { SessionFlow } from "@/components/SessionFlow";
 import { Button } from "@/components/ui/button";
 import { Users, Sparkles } from "lucide-react";
